@@ -1,5 +1,6 @@
 ﻿namespace FSharpKoans
 open FSharpKoans.Core
+open System
 
 //---------------------------------------------------------------
 // Apply Your Knowledge!
@@ -60,6 +61,15 @@ module ``about the stock example`` =
 
     [<Koan>]
     let YouGotTheAnswerCorrect() =
-        let result =  __
+        let fromCsvRow (s:string) = s.Split(',')
+        let openCloseDifference(row:string[]) =
+            abs(Double.Parse(row[1]) - Double.Parse(row[4]))
+
+        let result =
+            stockData
+            |> Seq.skip 1
+            |> Seq.map fromCsvRow
+            |> Seq.maxBy openCloseDifference
+            |> Seq.head
         
         AssertEquality "2012-03-13" result
